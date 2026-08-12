@@ -1,0 +1,64 @@
+# ===========================================================================
+#  Trading strategy & risk configuration
+#  These are the knobs that shape behaviour. Sane, conservative defaults are
+#  chosen deliberately — capital preservation first. Tune AFTER backtesting.
+# ===========================================================================
+
+# Symbols to trade. Spot uses e.g. BTC/USDT; perpetual uses BTC/USDT:USDT.
+symbols:
+  - BTC/USDT
+  - ETH/USDT
+  - XRP/USDT
+
+# Candle timeframe the strategy operates on.
+timeframe: "1h"
+
+# How often the engine wakes up to evaluate the market (seconds).
+poll_interval_seconds: 60
+
+# Starting equity for PAPER trading (quote currency, e.g. USDT).
+paper_starting_balance: 10000
+
+# --- Risk management (the part that actually protects your money) ----------
+risk:
+  # Fraction of equity risked per trade (distance from entry to stop).
+  # 0.01 = risk 1% of the account on any single trade.
+  risk_per_trade: 0.01
+
+  # Max number of positions open at once (diversification / exposure cap).
+  max_open_positions: 3
+
+  # Stop-loss distance = atr_multiplier * ATR(atr_period).
+  atr_period: 14
+  atr_stop_multiplier: 2.5
+
+  # Take-profit = reward_risk_ratio * stop distance.
+  reward_risk_ratio: 2.0
+
+  # Trailing stop: once in profit, ratchet the stop up by this * ATR.
+  trailing_atr_multiplier: 3.0
+
+  # Circuit breaker: halt ALL new trades if equity falls this fraction below
+  # its running peak. 0.15 = stop trading after a 15% drawdown.
+  max_drawdown_halt: 0.15
+
+  # Leverage for perpetual/swap markets. Ignored for spot. Keep this LOW.
+  leverage: 2
+
+# --- Strategy parameters ---------------------------------------------------
+strategy:
+  ema_fast: 20
+  ema_slow: 50
+  rsi_period: 14
+  rsi_overbought: 70
+  rsi_oversold: 30
+  macd_fast: 12
+  macd_slow: 26
+  macd_signal: 9
+  adx_period: 14
+  # Only take trend trades when ADX (trend strength) is above this.
+  adx_trend_threshold: 20
+  bb_period: 20
+  bb_std: 2.0
+  # Minimum ensemble score (0..1) required to open a position.
+  min_signal_score: 0.6
