@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crypto Trading Bot</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <span class="logo">◈</span>
+      <div>
+        <h1>Crypto Trading Bot</h1>
+        <div class="sub" id="context">loading…</div>
+      </div>
+    </div>
+    <div class="controls">
+      <span id="mode-badge" class="badge">—</span>
+      <span id="status-badge" class="badge">—</span>
+      <button id="btn-start" class="btn btn-start">Start</button>
+      <button id="btn-stop" class="btn btn-stop">Stop</button>
+    </div>
+  </header>
+
+  <div id="banner" class="banner hidden"></div>
+
+  <main>
+    <section class="cards">
+      <div class="card"><div class="label">Equity</div><div class="value" id="equity">—</div><div class="delta" id="equity-delta"></div></div>
+      <div class="card"><div class="label">Total Return</div><div class="value" id="return">—</div></div>
+      <div class="card"><div class="label">Realized PnL</div><div class="value" id="realized">—</div></div>
+      <div class="card"><div class="label">Win Rate</div><div class="value" id="winrate">—</div></div>
+      <div class="card"><div class="label">Profit Factor</div><div class="value" id="pf">—</div></div>
+      <div class="card"><div class="label">Drawdown</div><div class="value" id="drawdown">—</div></div>
+    </section>
+
+    <section class="panel">
+      <h2>Equity Curve</h2>
+      <canvas id="equity-chart" height="90"></canvas>
+    </section>
+
+    <div class="grid">
+      <section class="panel">
+        <h2>Open Positions</h2>
+        <table id="positions">
+          <thead><tr><th>Symbol</th><th>Side</th><th>Qty</th><th>Entry</th><th>Price</th><th>Stop</th><th>Target</th><th>PnL</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <div class="empty" id="positions-empty">No open positions.</div>
+      </section>
+
+      <section class="panel">
+        <h2>Live Signals</h2>
+        <table id="signals">
+          <thead><tr><th>Symbol</th><th>Action</th><th>Score</th><th>Price</th><th>Reasons</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </section>
+    </div>
+
+    <section class="panel">
+      <h2>Trade History</h2>
+      <table id="trades">
+        <thead><tr><th>Closed</th><th>Symbol</th><th>Side</th><th>Entry</th><th>Exit</th><th>PnL</th><th>%</th><th>Reason</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div class="empty" id="trades-empty">No trades yet.</div>
+    </section>
+  </main>
+
+  <footer>
+    Paper trading uses real market prices with simulated money. Trading involves
+    substantial risk of loss — never trade money you cannot afford to lose.
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
